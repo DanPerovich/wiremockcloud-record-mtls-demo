@@ -1,6 +1,6 @@
 # WireMock Cloud MTLS Demo Application
 
-A demonstration application showcasing WireMock Cloud's CLI MTLS recording capabilities. This app features a simple web interface that can seamlessly switch between calling a live MTLS-secured API and a WireMock Cloud recorder.
+A demonstration application showcasing WireMock Cloud's CLI MTLS recording capabilities. This app features a simple web interface that can seamlessly switch between calling a live MTLS-secured API, a WireMock Cloud recorder, and a WireMock Mock API.
 
 ## 🚀 Features
 
