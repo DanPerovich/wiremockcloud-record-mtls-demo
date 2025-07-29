@@ -46,7 +46,7 @@ choco install mkcert
 wiremock login
 
 # Verify authentication
-wiremock cloud
+wiremock whoami
 ```
 
 ### 4. Environment Setup
@@ -151,6 +151,8 @@ Expected output:
 
 3. **Monitor Recording**: Watch the WireMock CLI output for recorded interactions
 
+4. **Stop Recorder**: Stop the recorder by hitting enter in the appropriate terminal and following prompts to upload the recording to an existing Mock API or to a new one.
+
 ### Step 5: Review Recorded Stubs in WireMock Cloud
 
 1. **Access WireMock Cloud**: Go to [WireMock Cloud](https://app.wiremock.cloud)
@@ -223,7 +225,7 @@ This configuration transforms recorded stubs to use flexible matching:
 
 1. **Get Your Mock API URL**:
    - In WireMock Cloud, copy your Mock API's base URL
-   - Example: `https://abc123.wiremockapi.cloud`
+   - Example: `https://abc123.wiremockapi.cloud/`
 
 2. **Configure Mock Mode**:
    - Select **"Mock API Endpoint"** radio button
