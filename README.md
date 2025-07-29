@@ -280,6 +280,16 @@ openssl x509 -in server-mkcert.crt -text -noout
 mkcert -CAROOT
 ```
 
+**mkcert Java Keystore Issues**:
+```bash
+# If you see "keytool error: java.lang.Exception: Keystore file does not exist"
+# This is a known issue but doesn't affect certificate generation
+# The scripts are configured to bypass Java keystore integration
+
+# To manually fix if certificates are missing:
+JAVA_HOME="" mkcert -key-file server-mkcert.key -cert-file server-mkcert.crt localhost 127.0.0.1 ::1
+```
+
 **Connection Refused**:
 - Ensure target API is accessible
 - Check firewall and network settings

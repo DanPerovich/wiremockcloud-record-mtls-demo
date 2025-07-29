@@ -53,12 +53,11 @@ wiremock cloud
 
 #### Generate System-Trusted Certificates
 ```bash
-# Install mkcert CA (run once per system)
-mkcert -install
-
-# Generate server certificates (already done in this demo)
-./generate-mkcert-server-certs.sh
+# Generate complete MTLS certificate infrastructure
+./generate-ca-and-certs.sh
 ```
+
+**Note**: If you see Java keystore errors during certificate generation, this is expected and doesn't affect functionality. The scripts automatically bypass Java keystore integration.
 
 #### Install Dependencies
 ```bash

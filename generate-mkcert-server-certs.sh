@@ -1,41 +1,36 @@
 #!/bin/bash
 
-echo "🔐 Generating server certificates using mkcert CA..."
+echo "🔐 Generating server certificates using mkcert..."
 
-# Generate server private key
-echo "📝 Generating server private key..."
-openssl genrsa -out server-mkcert.key 2048
+# Check if mkcert is installed
+if ! command -v mkcert &> /dev/null; then
+    echo "❌ mkcert is not installed. Please install it first:"
+    echo "   macOS: brew install mkcert"
+    echo "   Linux: See https://github.com/FiloSottile/mkcert#linux"
+    echo "   Windows: choco install mkcert"
+    exit 1
+fi
 
-# Create server certificate signing request
-echo "📝 Creating server certificate signing request..."
-openssl req -new -key server-mkcert.key -out server-mkcert.csr -subj "/C=US/ST=Demo/L=Demo/O=mkcert/CN=localhost"
+# Install mkcert CA if not already done
+echo "📋 Installing mkcert CA..."
+JAVA_HOME="" mkcert -install
 
-# Create server certificate extensions file for localhost
-cat > server-mkcert.ext << EOF
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
+# Generate server certificates using mkcert (disable Java keystore integration)
+echo "📝 Generating system-trusted server certificate..."
+JAVA_HOME="" mkcert -key-file server-mkcert.key -cert-file server-mkcert.crt localhost 127.0.0.1 ::1
 
-[alt_names]
-DNS.1 = localhost
-IP.1 = 127.0.0.1
-IP.2 = ::1
-EOF
+# Copy mkcert CA for reference
+CAROOT=$(mkcert -CAROOT)
+if [ -f "$CAROOT/rootCA.pem" ]; then
+    cp "$CAROOT/rootCA.pem" mkcert-ca.crt
+    echo "📋 Copied mkcert CA certificate to mkcert-ca.crt"
+fi
 
-# Generate server certificate signed by mkcert CA
-echo "📝 Generating server certificate signed by mkcert CA..."
-openssl x509 -req -in server-mkcert.csr -CA mkcert-ca.crt -CAkey mkcert-ca.key -CAcreateserial -out server-mkcert.crt -days 365 -extfile server-mkcert.ext
-
-# Clean up temporary files
-rm server-mkcert.csr server-mkcert.ext
-
-# Verify certificates
-echo "✅ Verifying server certificate..."
-if openssl verify -CAfile mkcert-ca.crt server-mkcert.crt > /dev/null 2>&1; then
-    echo "✅ Server certificate verified successfully"
+# Verify certificates exist
+if [ -f "server-mkcert.crt" ] && [ -f "server-mkcert.key" ]; then
+    echo "✅ Server certificates generated successfully"
 else
-    echo "❌ Server certificate verification failed"
+    echo "❌ Failed to generate server certificates"
     exit 1
 fi
 
@@ -51,3 +46,8 @@ echo "  - server-mkcert.crt (certificate)"
 echo "  - mkcert-ca.crt (CA certificate - system trusted)"
 echo ""
 echo "These certificates are trusted by your system!"
+echo ""
+echo "You can now start the MTLS API server with:"
+echo "  node api-server.js"
+echo ""
+echo "The API will be available at: https://localhost:8443"

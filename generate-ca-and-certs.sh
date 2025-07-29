@@ -66,11 +66,11 @@ generate_mkcert_server() {
     
     # Install mkcert CA if not already done
     echo "📋 Installing mkcert CA..."
-    mkcert -install
+    JAVA_HOME="" mkcert -install
     
-    # Generate server certificates using mkcert
+    # Generate server certificates using mkcert (disable Java keystore integration)
     echo "📝 Generating system-trusted server certificate..."
-    mkcert -key-file server-mkcert.key -cert-file server-mkcert.crt localhost 127.0.0.1 ::1
+    JAVA_HOME="" mkcert -key-file server-mkcert.key -cert-file server-mkcert.crt localhost 127.0.0.1 ::1
     
     # Copy mkcert CA for reference
     CAROOT=$(mkcert -CAROOT)
