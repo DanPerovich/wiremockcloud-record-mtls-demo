@@ -1,0 +1,28 @@
+{
+  "name": "wiremockcloud-record-mtls-demo",
+  "version": "1.0.0",
+  "description": "Demo application for WireMock Cloud CLI MTLS recording capabilities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node start-demo.js",
+    "dev": "nodemon server.js",
+    "api": "node api-server.js",
+    "api-dev": "nodemon api-server.js",
+    "start-both": "node start-demo.js",
+    "stop": "node start-demo.js stop",
+    "status": "node start-demo.js status"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "https": "^1.0.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["wiremock", "mtls", "demo", "recording"],
+  "author": "Demo",
+  "license": "MIT"
+}

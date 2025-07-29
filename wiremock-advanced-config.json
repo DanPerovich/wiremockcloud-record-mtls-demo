@@ -1,0 +1,49 @@
+{
+  "import": {
+    "stubTemplateTransformationRules": [
+      {
+        "filter": {
+          "request": {
+            "method": "POST",
+            "urlPath": "/api/users"
+          }
+        },
+        "template": {
+          "request": {
+            "bodyPatterns": [
+              {
+                "matchesJsonPath": "$.name"
+              },
+              {
+                "matchesJsonPath": "$.email"
+              },
+              {
+                "matchesJsonPath": "$.role"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "filter": {
+          "request": {
+            "method": "POST",
+            "urlPath": "/api/data"
+          }
+        },
+        "template": {
+          "request": {
+            "bodyPatterns": [
+              {
+                "matchesJsonPath": "$.name"
+              },
+              {
+                "matchesJsonPath": "$.email"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

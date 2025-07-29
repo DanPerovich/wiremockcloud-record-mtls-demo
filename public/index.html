@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 WireMock Cloud MTLS Demo</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔒 WireMock Cloud MTLS Demo</h1>
+            <p>Demonstrating MTLS API recording capabilities</p>
+        </header>
+
+        <div class="config-section">
+            <h2>Configuration</h2>
+            <div class="config-controls">
+                <label>
+                    <input type="radio" name="endpoint" value="live" checked>
+                    Live API Endpoint
+                </label>
+                <label>
+                    <input type="radio" name="endpoint" value="wiremock">
+                    WireMock Recorder
+                </label>
+                <label>
+                    <input type="radio" name="endpoint" value="mock">
+                    Mock API Endpoint
+                </label>
+            </div>
+            
+            <div class="endpoint-configurations">
+                <div id="live-config" class="endpoint-config active">
+                    <h3>Live API Configuration</h3>
+                    <div class="input-group">
+                        <label for="live-url">API Base URL:</label>
+                        <input type="url" id="live-url" placeholder="https://localhost:8443" value="https://localhost:8443">
+                    </div>
+                </div>
+                
+                <div id="wiremock-config" class="endpoint-config">
+                    <h3>WireMock Recorder Configuration</h3>
+                    <div class="input-group">
+                        <label for="wiremock-port">Recorder Port:</label>
+                        <input type="number" id="wiremock-port" placeholder="8000" value="8000" min="1000" max="65535">
+                    </div>
+                    <div class="input-group">
+                        <label for="wiremock-url">Full Recorder URL:</label>
+                        <input type="url" id="wiremock-url" readonly value="http://localhost:8000">
+                    </div>
+                </div>
+                
+                <div id="mock-config" class="endpoint-config">
+                    <h3>Mock API Configuration</h3>
+                    <div class="input-group">
+                        <label for="mock-url">Mock API Base URL:</label>
+                        <input type="url" id="mock-url" placeholder="https://your-mock-api.wiremock.cloud">
+                    </div>
+                    <div class="help-text">
+                        Enter your WireMock Cloud mock API URL or any other mock endpoint
+                    </div>
+                </div>
+            </div>
+            
+            <div class="endpoint-info">
+                <p id="current-endpoint">Currently using: <span class="endpoint-url">Live API</span></p>
+                <button id="save-config" class="config-btn">Save Configuration</button>
+            </div>
+        </div>
+
+        <div class="actions-section">
+            <h2>API Actions</h2>
+            <div class="button-group">
+                <button id="fetch-data" class="primary-btn">Fetch Data</button>
+                <button id="post-data" class="secondary-btn">Post Data</button>
+                <button id="clear-results" class="danger-btn">Clear Results</button>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>API Response</h2>
+            <div id="loading" class="loading hidden">Loading...</div>
+            <div id="error" class="error hidden"></div>
+            <pre id="response-data" class="response-data"></pre>
+        </div>
+
+        <div class="recording-info">
+            <h2>Recording Status</h2>
+            <div id="recording-status" class="status-indicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
